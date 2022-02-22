@@ -6,8 +6,7 @@ const User = require("../models/userModel");
 // @route   GET /api/goals
 // @access  Private
 const getGoals = asyncHandler(async (req, res) => {
-    console.log(req.user);
-    const goals = await Goal.find({user: req.user._id });
+    const goals = await Goal.find({user: req.user._id }); // // <- Connect user with post I.
     res.status(200).json({status: "success", goals});
 });
 
@@ -22,7 +21,7 @@ const setGoal = asyncHandler(async (req, res) => {
 
     const goal = await Goal.create({
         text: req.body.text,
-        user: req.user._id
+        user: req.user._id // <- Connect user with post II.
     });
 
     res.status(200).json({status: "success", goal});
@@ -32,6 +31,7 @@ const setGoal = asyncHandler(async (req, res) => {
 // @route   PUT /api/goals/:ID
 // @access  Private
 const updateGoal = asyncHandler(async (req, res) => {
+    console.log(">>>>>>>PUT_GOAL>>>>>>>", req.user, req.body)
     const goal = await Goal.findById(req.params.ID);
 
     if (!goal) {
@@ -39,15 +39,17 @@ const updateGoal = asyncHandler(async (req, res) => {
         throw new Error("No such goal exists.")
     }
 
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id); // <- Connect user with post III.
+
+    console.log(user, "<<<<<<<<<<");
 
     if(!user) {
         res.status(400)
         throw new Error("User not found.")
     }
 
-    if(goal.user.toString() !== user._id) {
-        res.status(403)
+    if(goal.user.toString() !== user.id) {
+        res.status(401)
         throw new Error("Not Authorized.")
     }
 
@@ -61,18 +63,19 @@ const updateGoal = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteGoal = asyncHandler(async (req, res) => {
     const goal = await Goal.findById(req.params.ID);
-
     if (!goal) {
         res.status(400)
         throw new Error("No such goal exists.");
     }
+
+    const user = await User.findById(req.user._id); // <- Connect user with post III.
 
     if (!user) {
         res.status(401)
         throw new Error("User not found.")
     }
 
-    if (goal.user.toString() !== user._id) {
+    if (goal.user.toString() !== user.id) {
         res.status(403)
         throw new Error("Not Authorized.")
     }

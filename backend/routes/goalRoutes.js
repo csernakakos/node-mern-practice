@@ -6,11 +6,11 @@ const {getGoals, setGoal, updateGoal, deleteGoal} = require("../controllers/goal
 router
     .route("/")
     .get(protect, getGoals)
-    .post(protect, setGoal);
+    .post(protect, setGoal)
 
 router
     .route("/:ID")
     .put(protect, updateGoal)
-    .delete(protect, deleteGoal);
+    .delete(protect, deleteGoal)
 
 module.exports = router;
