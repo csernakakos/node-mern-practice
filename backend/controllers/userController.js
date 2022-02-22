@@ -1,7 +1,18 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs"); // to hash & salt passwords
+
+// JWT function
+// The payload is the user data. We pass it into jwt.sign
+const generateToken = (id) => {
+    return jwt.sign(
+        {id}, // <- payload. We set the payload to be the user's ID. Next, when we use jwt.verify, we'll get that ID back in "decoded". See authMiddleware.js
+        process.env.JWT_SECRET, // <- secret
+        {expiresIn: "2d"}, // <- when the JWT expires
+    );
+}
+// JWT function
 
 // @desc    Register user
 // @route   POST /api/users
@@ -37,7 +48,9 @@ const registerUser = asyncHandler(async(req, res) => {
             status: "success",
             newUser: {
                 _id: newUser._id,
+                name: newUser.name,
                 email: newUser.email,
+                token: generateToken(newUser._id) // <- JWT
             }
         });
     } else {
@@ -60,16 +73,19 @@ const loginUser = asyncHandler(async(req, res) => {
 
     const existingUser = await User.findOne({email});
 
-    if (!existingUser) {
-        res.status(400)
-        throw new Error("hey sis, you don't yet exist")
-    };
-
     if (existingUser && (await bcrypt.compare(password, existingUser.password))) {
-        res.status(200).json({status: "success"});
+        res.status(200).json({
+            status: "success",
+            user: {
+                _id: existingUser._id,
+                name: existingUser.name,
+                email: existingUser.email,
+                token: generateToken(existingUser._id) // <- JWT
+            }
+        });
     } else {
         res.status(400)
-        throw new Error("Wrong user credentials.")
+        throw new Error("Missing or wrong user credentials.")
     }
 });
 
@@ -77,7 +93,15 @@ const loginUser = asyncHandler(async(req, res) => {
 // @route   POST /api/users/me
 // @access  Private
 const getMe = asyncHandler(async(req, res) => {
-    res.json({msg: "GET ME"})
+    const {_id, name, email} = await User.findById(req.user.id);
+    res.json({
+        status: "success",
+        user: {
+            _id,
+            name,
+            email,
+        }
+    })
 });
 
 module.exports = {

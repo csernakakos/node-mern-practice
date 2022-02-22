@@ -15,3 +15,4 @@ Brad Traversy's MERN stack
 | What  | What's new  |
 |---|---|
 |Related documents   |- Added `user` field to `goal` model via `mongoose.Schema.Types.ObjectId`|
+|JWT | - Sign a JWT token, then send it back in both `registerUser` and `loginUser` |
