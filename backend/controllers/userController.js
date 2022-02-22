@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs"); // to hash & salt passwords
 
 // JWT function
 // The payload is the user data. We pass it into jwt.sign
-const generateToken = (id) => {
+const signToken = (id) => {
     return jwt.sign(
         {id}, // <- payload. We set the payload to be the user's ID. Next, when we use jwt.verify, we'll get that ID back in "decoded". See authMiddleware.js
         process.env.JWT_SECRET, // <- secret
@@ -37,20 +37,20 @@ const registerUser = asyncHandler(async(req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create user
-    const newUser = await User.create({
+    const user = await User.create({
         name,
         email,
         password: hashedPassword,
     });
 
-    if (newUser)  {
+    if (user)  {
         res.status(201).json({
             status: "success",
             newUser: {
-                _id: newUser._id,
-                name: newUser.name,
-                email: newUser.email,
-                token: generateToken(newUser._id) // <- JWT
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                token: signToken(user._id) // <- JWT
             }
         });
     } else {
@@ -80,7 +80,7 @@ const loginUser = asyncHandler(async(req, res) => {
                 _id: existingUser._id,
                 name: existingUser.name,
                 email: existingUser.email,
-                token: generateToken(existingUser._id) // <- JWT
+                token: signToken(existingUser._id) // <- JWT
             }
         });
     } else {

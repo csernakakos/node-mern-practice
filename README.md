@@ -15,4 +15,5 @@ Brad Traversy's MERN stack
 | What  | What's new  |
 |---|---|
 |Related documents   |- Added `user` field to `goal` model via `mongoose.Schema.Types.ObjectId`|
-|JWT | - Sign a JWT token, then send it back in both `registerUser` and `loginUser` |
+|`bcryptjs` | - When signing up a user, use `bcrypt.genSalt()` and `bcrypt.hash()` to hash and salt a newly entered password <br> - When logging in a user, use `bcrypt.compare` to match an entered password against what's in the database  |
+|JWT | - When signing up a user and when logging in a user, sign a JWT token (`signToken`) using the user's database ID as the payload <br> - Send the signed token back to the client in both `registerUser` and `loginUser` <br> - Create a protected route, for example `getMe` <br> - The `protect` middleware will extract the token from the request header <br> - Then, it will verify the request header's token against our own .env secret <br> - If all checks out, `protect` will then find the user in our database and add the user (without the password) to the request object <br> - The next route will req.user to get the user's data from the database and send it to the client |
