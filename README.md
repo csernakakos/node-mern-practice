@@ -11,7 +11,7 @@ Brad Traversy's MERN stack
 |Database code |- Stored database code in `config/db.js`. <br/> - Connected to the database with a try-catch block <br/> - `server.js` calls `connectDB()` </br> `goalModel.js` uses `{timestamps: true}` |
 |Error handling |- Stored `errorHandler` in `middleware/errorMiddleware.js` <br> - Got the `message` and `stack` from the `err` object. <br> - Only displayed `stack` contents in the development environment <br> - In `server.js`, used that middleware **last** |
 
-## Takeaways from [section #2]()
+## Takeaways from [section #2](https://youtu.be/enopDSs3DRw)
 | What  | What's new  |
 |---|---|
 |Related documents   |- Added `user` field to `goal` model via `mongoose.Schema.Types.ObjectId` <br> - Every function is `goalController` brings in the goal's associated user: <br> - When getting all goals of a user: `const goals = await Goal.find({user: req.user._id });` <br> - When posting a new goal: `user: req.user._id` <br> - When updating an existing goal: `const user = await User.findById(req.user._id);` <br> - When deleting a goal: `const user = await User.findById(req.user._id);` <br> - We also run checks to match the user's ID against the user ID that is stored on the goal document |
