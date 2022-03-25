@@ -22,5 +22,5 @@ Brad Traversy's MERN stack
 ## Takeaways from [section #2](https://youtu.be/enopDSs3DRw)
 | What  | What's new  |
 |---|---|
-|React   |- `npx create-react-app frontend --template redux` <br> - package.json: `"frontend": "npm start --prefix frontend"` |
+|React   |- `npx create-react-app frontend --template redux` <br> - package.json: `"frontend": "npm start --prefix frontend"` <br> - `npm i react-icons` |
 |b | b |
