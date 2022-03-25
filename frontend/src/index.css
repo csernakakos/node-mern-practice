@@ -9,11 +9,12 @@
 body {
   font-family: 'Poppins', sans-serif;
   height: 100vh;
+  background: #eee;
 }
 
 a {
   text-decoration: none;
-  color: #000;
+  color: #111;
 }
 
 p {
@@ -137,9 +138,9 @@ h3 {
 
 .btn {
   padding: 10px 20px;
-  border: 1px solid #000;
+  border: 1px solid #111;
   border-radius: 5px;
-  background: #000;
+  background: #111;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
@@ -149,6 +150,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-transform: uppercase;
 }
 
 .btn svg {
@@ -157,12 +159,12 @@ h3 {
 
 .btn-reverse {
   background: #fff;
-  color: #000;
+  color: #111;
 }
 
 .btn-block {
-  width: 100%;
-  margin-bottom: 20px;
+  width: 50%;
+  margin: 0 auto 20px auto;
 }
 
 .btn:hover {
@@ -186,7 +188,7 @@ h3 {
   width: 64px;
   height: 64px;
   border: 8px solid;
-  border-color: #000 transparent #555 transparent;
+  border-color: #111 transparent #555 transparent;
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }

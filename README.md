@@ -19,7 +19,6 @@ Brad Traversy's MERN stack
 |JWT | - When signing up a user and when logging in a user, sign a JWT token (`signToken`) using the user's database ID as the payload <br> - Send the signed token back to the client in both `registerUser` and `loginUser` <br> - Create a protected route, for example `getMe` <br> - The `protect` middleware will extract the token from the request header <br> - Then, it will verify the request header's token against our own .env secret <br> - If all checks out, `protect` will then find the user in our database and add the user (without the password) to the request object <br> - The next route will req.user to get the user's data from the database and send it to the client |
 
 ## Takeaways from [section #3](https://youtu.be/mvfsC66xqj0)
-## Takeaways from [section #2](https://youtu.be/enopDSs3DRw)
 | What  | What's new  |
 |---|---|
 |React   |- `npx create-react-app frontend --template redux` <br> - package.json: `"frontend": "npm start --prefix frontend"` <br> - `npm i react-icons` |
